@@ -1,0 +1,15 @@
+DROP TABLE IF EXISTS orders;
+
+CREATE TABLE IF NOT EXISTS orders;
+CREATE TYPE STATUS AS ENUM ('WAIT', 'COOK', 'READY', 'DELIVER', 'FINISH');
+CREATE SEQUENCE global_seq START WITH 100000;
+
+(
+    id BIGSERIAL PRIMARY KEY DEFAULT nextval('global_seq'),
+    clientEmail  VARCHAR(200) NOT NULL ,
+    clintName  VARCHAR(200) NOT NULL ,
+    orderName VARCHAR(200) NOT NULL ,
+    deliveryAddress VARCHAR(200) NOT NULL ,
+    status STATUS NOT NULL,
+    timeOrder TIMESTAMP NOT NULL
+)

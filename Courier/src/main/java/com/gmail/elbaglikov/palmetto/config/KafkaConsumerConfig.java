@@ -2,6 +2,7 @@ package com.gmail.elbaglikov.palmetto.config;
 
 import com.gmail.elbaglikov.palmetto.Constants;
 import com.gmail.elbaglikov.palmetto.model.Order;
+import com.gmail.elbaglikov.palmetto.model.OrderStatus;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.common.serialization.StringDeserializer;
 import org.springframework.context.annotation.Bean;
@@ -38,6 +39,8 @@ public class KafkaConsumerConfig {
         ConcurrentKafkaListenerContainerFactory<String, Order> factory =
                 new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());
+        factory.setRecordFilterStrategy(
+                record -> record.value().getStatus() != OrderStatus.READY);
         return factory;
     }
 
@@ -46,6 +49,8 @@ public class KafkaConsumerConfig {
         ConcurrentKafkaListenerContainerFactory<String, Order> factory =
                 new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());
+        factory.setRecordFilterStrategy(
+                record -> record.value().getStatus() != OrderStatus.READY);
         return factory;
     }
 
@@ -54,6 +59,8 @@ public class KafkaConsumerConfig {
         ConcurrentKafkaListenerContainerFactory<String, Order> factory =
                 new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());
+        factory.setRecordFilterStrategy(
+                record -> record.value().getStatus() != OrderStatus.READY);
         return factory;
     }
 }

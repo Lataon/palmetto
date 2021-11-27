@@ -22,3 +22,13 @@ services:
       KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_CREATE_TOPICS: "ORDER:3:1,NOTIFICATION:3:1"
+
+  db:
+    image: postgres
+    restart: always
+    ports:
+     - "5432:5432"
+    environment:
+      POSTGRES_PASSWORD: 12345
+      POSTGRES_USER: admin
+      POSTGRES_DB: orders

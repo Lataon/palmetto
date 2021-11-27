@@ -7,5 +7,5 @@ public final class Constants {
     public static final String TOPIC_ORDER_NAME = "ORDER";
     public static final String TOPIC_NOTIFICATION_NAME = "NOTIFICATION";
     public static final String BOOTSTRAP_SERVER = "localhost:29092";
-    public static final String GROUP = "client";
+    public static final String GROUP = "courier";
 }

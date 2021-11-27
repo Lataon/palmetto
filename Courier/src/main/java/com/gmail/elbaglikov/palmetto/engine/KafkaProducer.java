@@ -1,6 +1,5 @@
 package com.gmail.elbaglikov.palmetto.engine;
 
-import com.gmail.elbaglikov.palmetto.Constants;
 import com.gmail.elbaglikov.palmetto.model.Order;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,15 +11,11 @@ import org.springframework.stereotype.Component;
 public class KafkaProducer {
     private static final Logger LOGGER = LoggerFactory.getLogger(KafkaProducer.class);
 
-    private final KafkaTemplate<String, Order> kafkaTemplate;
-
     @Autowired
-    public KafkaProducer(KafkaTemplate<String, Order> kafkaTemplate) {
-        this.kafkaTemplate = kafkaTemplate;
-    }
+    private KafkaTemplate<String, Order> kafkaTemplate;
 
-    public void send(Order order) {
-        LOGGER.info("sending payload='{}' to topic='{}'", order, Constants.TOPIC_ORDER_NAME);
-        kafkaTemplate.send(Constants.TOPIC_ORDER_NAME, order);
+    public void send(String topic, Order order) {
+        LOGGER.info("sending payload='{}' to topic='{}'", order, topic);
+        kafkaTemplate.send(topic, order);
     }
 }

@@ -19,7 +19,7 @@ import java.util.Map;
 @Configuration
 public class KafkaConsumerConfig {
     private String bootstrapAddress = Constants.BOOTSTRAP_SERVER;
-    private String group = Constants.GROUP;
+    private String group = Constants.CLIENT_GROUP;
 
     @Bean
     public ConsumerFactory<String, Order> consumerFactory() {

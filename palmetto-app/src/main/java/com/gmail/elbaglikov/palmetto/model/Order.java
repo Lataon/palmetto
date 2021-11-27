@@ -1,62 +1,29 @@
 package com.gmail.elbaglikov.palmetto.model;
 
-import com.sun.istack.NotNull;
-
-import javax.persistence.*;
-import java.time.LocalDateTime;
 import java.util.Objects;
 
-@Entity
-@Table(name = "orders")
 public class Order {
-    @Id
-    @Column
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-
-    @Column(name = "clientEmail", nullable = false)
-    @NotNull
     private String clientEmail;
-
-    @Column(name = "clintName", nullable = false)
-    @NotNull
     private String clintName;
-
-    @Column(name = "orderName", nullable = false)
-    @NotNull
     private String orderName;
-
-    @Column(name = "deliveryAddress", nullable = false)
-    @NotNull
     private String deliveryAddress;
-
-    @Column(name = "status", nullable = false)
-    @NotNull
     private OrderStatus status;
-
-    @Column(name = "timeOrder", nullable = false)
-    @NotNull
-    private LocalDateTime timeOrder;
 
     public Order() {
     }
 
-    public boolean isNew() {
-        return id == null;
-    }
-
-    public Order(Long id, String clientEmail, String clintName, String orderName, String deliveryAddress, OrderStatus status, LocalDateTime timeOrder) {
+    public Order(Long id, String clientEmail, String clintName, String orderName, String deliveryAddress, OrderStatus status) {
         this.id = id;
         this.clientEmail = clientEmail;
         this.clintName = clintName;
         this.orderName = orderName;
         this.deliveryAddress = deliveryAddress;
         this.status = status;
-        this.timeOrder = timeOrder;
     }
 
-    public Order(String clientEmail, String clintName, String orderName, String deliveryAddress, OrderStatus status, LocalDateTime timeOrder) {
-        this(null, clientEmail, clintName, orderName, deliveryAddress, status, timeOrder);
+    public Order(String clientEmail, String clintName, String orderName, String deliveryAddress, OrderStatus status) {
+        this(null, clientEmail, clintName, orderName, deliveryAddress, status);
     }
 
     public Long getId() {
@@ -107,14 +74,6 @@ public class Order {
         this.status = status;
     }
 
-    public LocalDateTime getTimeOrder() {
-        return timeOrder;
-    }
-
-    public void setTimeOrder(LocalDateTime timeOrder) {
-        this.timeOrder = timeOrder;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -125,13 +84,12 @@ public class Order {
                 clintName.equals(order.clintName) &&
                 orderName.equals(order.orderName) &&
                 deliveryAddress.equals(order.deliveryAddress) &&
-                status == order.status &&
-                timeOrder.equals(order.timeOrder);
+                status == order.status;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, clientEmail, clintName, orderName, deliveryAddress, status, timeOrder);
+        return Objects.hash(id, clientEmail, clintName, orderName, deliveryAddress, status);
     }
 
     @Override
@@ -143,7 +101,6 @@ public class Order {
                 ", orderName='" + orderName + '\'' +
                 ", deliveryAddress='" + deliveryAddress + '\'' +
                 ", status=" + status +
-                ", timeOrder=" + timeOrder +
                 '}';
     }
 }
