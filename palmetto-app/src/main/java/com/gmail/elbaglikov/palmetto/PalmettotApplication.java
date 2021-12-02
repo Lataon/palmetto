@@ -7,6 +7,6 @@ import org.springframework.context.ConfigurableApplicationContext;
 @SpringBootApplication
 public class PalmettotApplication {
     public static void main(String[] args) {
-        ConfigurableApplicationContext context = SpringApplication.run(PalmettotApplication.class, args);
+        SpringApplication.run(PalmettotApplication.class, args);
     }
 }

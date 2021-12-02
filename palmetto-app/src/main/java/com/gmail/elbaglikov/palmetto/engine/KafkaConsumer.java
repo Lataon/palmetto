@@ -7,8 +7,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.kafka.annotation.KafkaListener;
-import org.springframework.kafka.annotation.PartitionOffset;
-import org.springframework.kafka.annotation.TopicPartition;
 import org.springframework.stereotype.Component;
 
 import java.util.concurrent.CountDownLatch;
@@ -27,38 +25,6 @@ public class KafkaConsumer {
             containerFactory = "kafkaListenerContainerFactory0")
     public void listenPartition0(Order order) {
         LOGGER.info("kafkaListenerContainerFactory0 received order='{}'", order);
-        order.setStatus(OrderStatus.COOK);
-        producer.send(Constants.TOPIC_NOTIFICATION_NAME, order);
-        CountDownLatch latch = new CountDownLatch(3);
-        try {
-            latch.await(10, TimeUnit.SECONDS);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        order.setStatus(OrderStatus.READY);
-        producer.send(Constants.TOPIC_NOTIFICATION_NAME, order);
-    }
-
-    @KafkaListener(topics =  Constants.TOPIC_ORDER_NAME,
-            containerFactory = "kafkaListenerContainerFactory1")
-    public void listenPartition1(Order order) {
-        LOGGER.info("kafkaListenerContainerFactory1 received order='{}'", order);
-        order.setStatus(OrderStatus.COOK);
-        producer.send(Constants.TOPIC_NOTIFICATION_NAME, order);
-        CountDownLatch latch = new CountDownLatch(3);
-        try {
-            latch.await(10, TimeUnit.SECONDS);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        order.setStatus(OrderStatus.READY);
-        producer.send(Constants.TOPIC_NOTIFICATION_NAME, order);
-    }
-
-    @KafkaListener(topics =  Constants.TOPIC_ORDER_NAME,
-            containerFactory = "kafkaListenerContainerFactory2")
-    public void listenPartition2(Order order) {
-        LOGGER.info("kafkaListenerContainerFactory2 received order='{}'", order);
         order.setStatus(OrderStatus.COOK);
         producer.send(Constants.TOPIC_NOTIFICATION_NAME, order);
         CountDownLatch latch = new CountDownLatch(3);

@@ -1,5 +1,7 @@
 package com.gmail.elbaglikov.palmetto.model;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.fasterxml.jackson.databind.ser.std.ToStringSerializer;
 import com.sun.istack.NotNull;
 
 import javax.persistence.*;
@@ -18,9 +20,9 @@ public class Order {
     @NotNull
     private String clientEmail;
 
-    @Column(name = "clintName", nullable = false)
+    @Column(name = "clientName", nullable = false)
     @NotNull
-    private String clintName;
+    private String clientName;
 
     @Column(name = "orderName", nullable = false)
     @NotNull
@@ -36,7 +38,8 @@ public class Order {
 
     @Column(name = "timeOrder", nullable = false)
     @NotNull
-    private LocalDateTime timeOrder;
+    @JsonSerialize(using = ToStringSerializer.class)
+    private LocalDateTime time;
 
     public Order() {
     }
@@ -45,18 +48,18 @@ public class Order {
         return id == null;
     }
 
-    public Order(Long id, String clientEmail, String clintName, String orderName, String deliveryAddress, OrderStatus status, LocalDateTime timeOrder) {
+    public Order(Long id, String clientEmail, String clientName, String orderName, String deliveryAddress, OrderStatus status, LocalDateTime time) {
         this.id = id;
         this.clientEmail = clientEmail;
-        this.clintName = clintName;
+        this.clientName = clientName;
         this.orderName = orderName;
         this.deliveryAddress = deliveryAddress;
         this.status = status;
-        this.timeOrder = timeOrder;
+        this.time = time;
     }
 
-    public Order(String clientEmail, String clintName, String orderName, String deliveryAddress, OrderStatus status, LocalDateTime timeOrder) {
-        this(null, clientEmail, clintName, orderName, deliveryAddress, status, timeOrder);
+    public Order(String clientEmail, String clientName, String orderName, String deliveryAddress, OrderStatus status, LocalDateTime time) {
+        this(null, clientEmail, clientName, orderName, deliveryAddress, status, time);
     }
 
     public Long getId() {
@@ -75,12 +78,12 @@ public class Order {
         this.clientEmail = clientEmail;
     }
 
-    public String getClintName() {
-        return clintName;
+    public String getClientName() {
+        return clientName;
     }
 
-    public void setClintName(String clintName) {
-        this.clintName = clintName;
+    public void setClientName(String clintName) {
+        this.clientName = clintName;
     }
 
     public String getOrderName() {
@@ -107,12 +110,12 @@ public class Order {
         this.status = status;
     }
 
-    public LocalDateTime getTimeOrder() {
-        return timeOrder;
+    public LocalDateTime getTime() {
+        return time;
     }
 
-    public void setTimeOrder(LocalDateTime timeOrder) {
-        this.timeOrder = timeOrder;
+    public void setTime(LocalDateTime time) {
+        this.time = time;
     }
 
     @Override
@@ -122,16 +125,16 @@ public class Order {
         Order order = (Order) o;
         return Objects.equals(id, order.id) &&
                 clientEmail.equals(order.clientEmail) &&
-                clintName.equals(order.clintName) &&
+                clientName.equals(order.clientName) &&
                 orderName.equals(order.orderName) &&
                 deliveryAddress.equals(order.deliveryAddress) &&
                 status == order.status &&
-                timeOrder.equals(order.timeOrder);
+                time.equals(order.time);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, clientEmail, clintName, orderName, deliveryAddress, status, timeOrder);
+        return Objects.hash(id, clientEmail, clientName, orderName, deliveryAddress, status, time);
     }
 
     @Override
@@ -139,11 +142,11 @@ public class Order {
         return "Order{" +
                 "id=" + id +
                 ", clientEmail='" + clientEmail + '\'' +
-                ", clintName='" + clintName + '\'' +
+                ", clintName='" + clientName + '\'' +
                 ", orderName='" + orderName + '\'' +
                 ", deliveryAddress='" + deliveryAddress + '\'' +
                 ", status=" + status +
-                ", timeOrder=" + timeOrder +
+                ", time=" + time +
                 '}';
     }
 }

@@ -20,25 +20,9 @@ public class KafkaConsumer {
         this.orderService = orderService;
     }
 
-    @KafkaListener( topics =  Constants.TOPIC_NOTIFICATION_NAME,
-            containerFactory = "kafkaListenerContainerFactory0")
-    public void listenPartition0(Order order) {
-        LOGGER.info("received order='{}'", order);
-        boolean ifUpdate = orderService.updateStatus(order);
-        LOGGER.info("status has updated '{}'successfully", ifUpdate?"":"not ");
-    }
-
-    @KafkaListener(topics =   Constants.TOPIC_NOTIFICATION_NAME,
-            containerFactory = "kafkaListenerContainerFactory1")
-    public void listenPartition1(Order order) {
-        LOGGER.info("received order='{}'", order);
-        boolean ifUpdate = orderService.updateStatus(order);
-        LOGGER.info("status has updated '{}'successfully", ifUpdate?"":"not ");
-    }
-
     @KafkaListener(topics =  Constants.TOPIC_NOTIFICATION_NAME,
-            containerFactory = "kafkaListenerContainerFactory2")
-    public void listenPartition2(Order order) {
+            containerFactory = "kafkaListenerContainerFactory")
+    public void listenNotifications(Order order) {
         LOGGER.info("received order='{}'", order);
         boolean ifUpdate = orderService.updateStatus(order);
         LOGGER.info("status has updated '{}'successfully", ifUpdate?"":"not ");

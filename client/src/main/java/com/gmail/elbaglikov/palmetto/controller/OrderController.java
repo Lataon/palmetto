@@ -4,6 +4,7 @@ import com.gmail.elbaglikov.palmetto.exception.OrderNotFoundException;
 import com.gmail.elbaglikov.palmetto.model.Order;
 import com.gmail.elbaglikov.palmetto.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -17,6 +18,7 @@ public class OrderController {
     }
 
     @PostMapping("/send-order")
+    @ResponseStatus(HttpStatus.CREATED)
     public Order newOrder (@RequestBody Order order) {
         return service.create(order);
     }

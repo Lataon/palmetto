@@ -23,7 +23,7 @@ public class OrderService {
 
     public Order create(Order order) {
         Order currentOrder = orderRepository.save(order);
-        kafkaProducer.send(order);
+        kafkaProducer.send(currentOrder);
         return currentOrder;
     }
 
@@ -35,5 +35,4 @@ public class OrderService {
         if (order.isNew()) throw new OrderNotFoundException(order.getId());
         return orderRepository.setStatus(order.getId(), order.getStatus())!=0;
     }
-
 }
