@@ -18,9 +18,9 @@ public class KafkaConsumer {
     private KafkaProducer producer;
 
     @KafkaListener(topics =  Constants.TOPIC_NOTIFICATION_NAME,
-            containerFactory = "kafkaListenerContainerFactory0")
+            containerFactory = "kafkaListenerContainerFactoryWithFilter")
     public void listenPartition0(Order order) {
-        LOGGER.info("kafkaListenerContainerFactory0 received order='{}'", order);
+        LOGGER.info("courier kafkaListenerContainerFactoryWithFilter received order='{}'", order);
         order.setStatus(OrderStatus.DELIVER);
         producer.send(Constants.TOPIC_NOTIFICATION_NAME, order);
     }

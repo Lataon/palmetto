@@ -1,5 +1,6 @@
 package com.gmail.elbaglikov.palmetto.service;
 
+import com.gmail.elbaglikov.palmetto.Constants;
 import com.gmail.elbaglikov.palmetto.engine.KafkaProducer;
 import com.gmail.elbaglikov.palmetto.exception.OrderNotFoundException;
 import com.gmail.elbaglikov.palmetto.jpa.OrderRepository;
@@ -23,7 +24,7 @@ public class OrderService {
 
     public Order create(Order order) {
         Order currentOrder = orderRepository.save(order);
-        kafkaProducer.send(currentOrder);
+        kafkaProducer.send(Constants.TOPIC_ORDER_NAME, currentOrder);
         return currentOrder;
     }
 

@@ -23,7 +23,7 @@ public class KafkaConsumer {
     @KafkaListener(topics =  Constants.TOPIC_NOTIFICATION_NAME,
             containerFactory = "kafkaListenerContainerFactory")
     public void listenNotifications(Order order) {
-        LOGGER.info("received order='{}'", order);
+        LOGGER.info("client kafkaListenerContainerFactory received order='{}'", order);
         boolean ifUpdate = orderService.updateStatus(order);
         LOGGER.info("status has updated '{}'successfully", ifUpdate?"":"not ");
     }

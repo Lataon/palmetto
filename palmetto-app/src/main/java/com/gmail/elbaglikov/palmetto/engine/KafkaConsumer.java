@@ -22,16 +22,16 @@ public class KafkaConsumer {
     private KafkaProducer producer;
 
     @KafkaListener(topics =  Constants.TOPIC_ORDER_NAME,
-            containerFactory = "kafkaListenerContainerFactory0")
-    public void listenPartition0(Order order) {
-        LOGGER.info("kafkaListenerContainerFactory0 received order='{}'", order);
+            containerFactory = "kafkaListenerContainerFactory")
+    public void listenPartition(Order order) {
+        LOGGER.info("kafkaListenerContainerFactory received order='{}'", order);
         order.setStatus(OrderStatus.COOK);
         producer.send(Constants.TOPIC_NOTIFICATION_NAME, order);
         CountDownLatch latch = new CountDownLatch(3);
         try {
             latch.await(10, TimeUnit.SECONDS);
         } catch (InterruptedException e) {
-            e.printStackTrace();
+            LOGGER.info("interrupt awaiting: " + e.getMessage());
         }
         order.setStatus(OrderStatus.READY);
         producer.send(Constants.TOPIC_NOTIFICATION_NAME, order);

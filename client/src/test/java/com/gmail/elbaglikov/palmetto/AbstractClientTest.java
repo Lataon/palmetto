@@ -7,7 +7,6 @@ import com.gmail.elbaglikov.palmetto.engine.KafkaProducer;
 import com.gmail.elbaglikov.palmetto.model.Order;
 import com.gmail.elbaglikov.palmetto.model.OrderStatus;
 import com.gmail.elbaglikov.palmetto.service.OrderService;
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
@@ -21,9 +20,8 @@ import static org.hamcrest.Matchers.equalTo;
 
 @DirtiesContext
 @SpringBootTest(properties = "spring.main.allow-bean-definition-overriding=true")
-//@AutoConfigureMockMvc
 @TestPropertySource(
-        locations = "classpath:application-integrationtest.properties")
+        locations = "classpath:application-h2.properties")
 public class AbstractClientTest {
     @Autowired
     private KafkaTestConsumer testConsumer;
@@ -37,15 +35,13 @@ public class AbstractClientTest {
     @Autowired
     private OrderService service;
 
-    @Test
     public void testProducer() throws Exception {
-        producer.send(TestData.ORDER);
+        producer.send(Constants.TOPIC_ORDER_NAME, TestData.ORDER);
         testConsumer.getLatch().await(10000, TimeUnit.MILLISECONDS);
         assertThat(testConsumer.getLatch().getCount(), equalTo(0L));
         assertThat(testConsumer.getOrder(), equalTo(TestData.ORDER));
     }
 
-    @Test
     public void testConsumerAndJpa() throws InterruptedException {
         Order currentOrder = service.create(TestData.NEW_ORDER); //put new order to database
         currentOrder.setStatus(OrderStatus.DELIVER); //change status
