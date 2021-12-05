@@ -27,7 +27,7 @@ public class KafkaConsumer {
         LOGGER.info("kafkaListenerContainerFactory received order='{}'", order);
         order.setStatus(OrderStatus.COOK);
         producer.send(Constants.TOPIC_NOTIFICATION_NAME, order);
-        CountDownLatch latch = new CountDownLatch(3);
+        CountDownLatch latch = new CountDownLatch(1);
         try {
             latch.await(10, TimeUnit.SECONDS);
         } catch (InterruptedException e) {
